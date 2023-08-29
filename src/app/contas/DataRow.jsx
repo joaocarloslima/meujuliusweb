@@ -9,7 +9,7 @@ export default function DataRow({ conta }) {
                 <span>{conta.nome}</span>
             </div>
             <div className="flex gap-1 items-center">
-                <span>R$ 100.00</span>
+                <span>R$ {conta.saldo.toFixed(2)}</span>
                 <div >
                     <DropMenu className="text-slate-300" />
                 </div>
