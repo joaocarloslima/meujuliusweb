@@ -4,7 +4,7 @@ import Button from "@/components/Button";
 import { CreditCardIcon } from "@heroicons/react/24/outline";
 
 async function getContas(){
-  const url = "http://localhost:8080/api/contas"
+  const url = "https://meujulius-production.up.railway.app/api/contas"
   const response = await fetch(url,  { next: { revalidate: 3600 } })
   return response.json()
 }
