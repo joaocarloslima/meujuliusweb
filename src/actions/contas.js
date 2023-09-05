@@ -2,8 +2,9 @@
 
 import { revalidatePath } from "next/cache"
 
+const url = process.env.NEXT_PUBLIC_BASE_URL + "/contas"
+
 export async function create(formData){
-    const url = "https://meujulius-production.up.railway.app/api/contas"
     
     const options = {
         method: "POST",
@@ -23,3 +24,8 @@ export async function create(formData){
     revalidatePath("/contas")
     return {ok: "Conta cadastrada com sucesso"}
 }
+
+export async function getContas(){
+    const response = await fetch(url,  { next: { revalidate: 3600 } })
+    return response.json()
+  }

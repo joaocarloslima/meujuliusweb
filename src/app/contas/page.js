@@ -2,12 +2,7 @@ import NavBar from "@/components/NavBar";
 import DataRow from "./DataRow";
 import Button from "@/components/Button";
 import { CreditCardIcon } from "@heroicons/react/24/outline";
-
-async function getContas(){
-  const url = "https://meujulius-production.up.railway.app/api/contas"
-  const response = await fetch(url,  { next: { revalidate: 3600 } })
-  return response.json()
-}
+import { getContas } from "@/actions/contas";
 
 export default async function Contas() {
   const data = await getContas()
