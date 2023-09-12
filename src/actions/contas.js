@@ -26,6 +26,62 @@ export async function create(formData){
 }
 
 export async function getContas(){
+    await new Promise(r => setTimeout(r, 5000));
     const response = await fetch(url,  { next: { revalidate: 3600 } })
     return response.json()
-  }
+}
+
+export async function destroy(id){
+    const deleteUrl = url + "/" + id
+   
+    const options = {
+        method: "DELETE"
+    }
+
+    const response = await fetch(deleteUrl, options)
+
+    if (!response.ok){
+        const json = await response.json()
+        return {error: "Falha ao apagar conta. Verifique se existem despesas nesta conta. "}
+    }
+
+    revalidatePath("/contas")
+
+
+}
+
+export async function getConta(id){
+    const getUrl = url + "/" + id
+    const response = await fetch(getUrl)
+
+    const json = await response.json()
+    
+    if (!response.ok){
+        return {error: "Falha ao carregar conta. " + json.message}
+    }
+
+    return json
+}
+
+export async function update(conta){
+    const updateUrl = url + "/" + conta.id
+    
+    const options = {
+        method: "PUT",
+        body: JSON.stringify(conta) ,
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }
+
+    const response = await fetch(updateUrl, options)
+
+    if (!response.ok){
+        const json = await response.json()
+        return {error: "Erro ao atualizar" + json.message }
+    }
+
+    revalidatePath("/contas")
+
+    return {ok: "Conta alterada com sucesso"}
+}
