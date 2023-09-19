@@ -6,6 +6,7 @@ import { getContas } from "@/actions/contas";
 
 export default async function Contas() {
   const data = await getContas()
+  
 
   return (
     <>
